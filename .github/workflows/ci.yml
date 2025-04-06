@@ -1,31 +1,16 @@
-name: CI Workflow
+name: Simple CI
 
 on:
   push:
-    branches:
-      - main  # يتم تشغيل الـ workflow عند الدفع إلى الفرع `main`
+    branches: [ master ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # تحديد نظام التشغيل الذي سيعمل عليه الـ pipeline
+    runs-on: ubuntu-latest
 
     steps:
-      # الخطوة 1: سحب الكود من GitHub
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      # الخطوة 2: إعداد Python
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'  # إعداد Python 3.8
+      - name: Run Hello World
+        run: echo "Hello, CI is working!"
 
-      # الخطوة 3: تثبيت المتطلبات
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt  # تثبيت المتطلبات من ملف `requirements.txt`
-
-      # الخطوة 4: تشغيل الاختبارات
-      - name: Run tests
-        run: |
-          pytest  # تشغيل اختبارات المشروع باستخدام `pytest`
