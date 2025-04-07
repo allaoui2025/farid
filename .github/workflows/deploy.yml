@@ -23,21 +23,20 @@ jobs:
         run: docker save flask-api:latest -o flask-api.tar
 
       - name: Copy Flask image to Kali server
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
-          chmod 600 key.pem
-           scp -o StrictHostKeyChecking=no -i key.pem flask-api.tar kali@:/home/kali/192.168.221.60
+  run: |
+    echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
+    chmod 600 key.pem
+    scp -o StrictHostKeyChecking=no -i key.pem flask-api.tar kali@192.168.221.60:/home/kali/
 
+- name: Deploy Flask API on Kali via SSH
+  run: |
+    ssh -o StrictHostKeyChecking=no -i key.pem kali@192.168.221.60 << 'EOF'
+      docker load -i /home/kali/flask-api.tar
+      docker stop flask-api || true
+      docker rm flask-api || true
+      docker run -d --name flask-api -p 5000:5000 flask-api:latest
+    EOF
 
-      - name: Deploy Flask API on Kali via SSH
-        run: |
-         ssh -o StrictHostKeyChecking=no -i key.pem kali@192.168.221.60<< 'EOF'
-
-            docker load -i /home/user/flask-api.tar
-            docker stop flask-api || true
-            docker rm flask-api || true
-            docker run -d --name flask-api -p 5000:5000 flask-api:latest
-          EOF
 
       # ---- بناء التطبيق الثاني (Node.js + Static Web) ----
       - name: Set up Docker for Node.js App
