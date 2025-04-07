@@ -17,7 +17,8 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image for Flask API
-        run: docker build -f Dockerfile-flask -t flask-api:latest ./app_1
+       run: docker build -t flask-api:latest ./app_1
+
 
       - name: Save Flask Docker image
         run: docker save flask-api:latest -o flask-api.tar
