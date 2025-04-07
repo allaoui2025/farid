@@ -37,7 +37,6 @@ jobs:
       docker run -d --name flask-api -p 5000:5000 flask-api:latest
     EOF
 
-
       # ---- بناء التطبيق الثاني (Node.js + Static Web) ----
       - name: Set up Docker for Node.js App
         uses: docker/setup-buildx-action@v3
