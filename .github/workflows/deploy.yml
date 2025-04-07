@@ -26,12 +26,12 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
-           scp -o StrictHostKeyChecking=no -i key.pem flask-api.tar kali@:/home/kali/ 192.168.221.60
+           scp -o StrictHostKeyChecking=no -i key.pem flask-api.tar kali@:/home/kali/192.168.221.60
 
 
       - name: Deploy Flask API on Kali via SSH
         run: |
-         ssh -o StrictHostKeyChecking=no -i key.pem kali@ 192.168.221.60<< 'EOF'
+         ssh -o StrictHostKeyChecking=no -i key.pem kali@192.168.221.60<< 'EOF'
 
             docker load -i /home/user/flask-api.tar
             docker stop flask-api || true
