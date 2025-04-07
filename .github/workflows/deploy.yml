@@ -31,7 +31,8 @@ jobs:
 
       - name: Deploy Flask API on Kali via SSH
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem user@YOUR_KALI_IP << 'EOF'
+         ssh -o StrictHostKeyChecking=no -i key.pem kali@192.168.1.100 << 'EOF'
+
             docker load -i /home/user/flask-api.tar
             docker stop flask-api || true
             docker rm flask-api || true
