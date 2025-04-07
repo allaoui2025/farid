@@ -26,7 +26,8 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
-          scp -o StrictHostKeyChecking=no -i key.pem flask-api.tar user@YOUR_KALI_IP:/home/user/
+           scp -o StrictHostKeyChecking=no -i key.pem flask-api.tar kali@192.168.1.100:/home/kali/
+
 
       - name: Deploy Flask API on Kali via SSH
         run: |
